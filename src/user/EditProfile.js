@@ -1,17 +1,39 @@
 import React, { Component } from "react";
-import { signup } from "../auth";
-import {Link} from 'react-router-dom'
+import { isAuthenticated } from "../auth";
+import { read, update } from "./apiUser";
+import { Redirect } from "react-router-dom";
 
-class Signup extends Component {
+class EditProfile extends Component {
   constructor() {
     super();
     this.state = {
+      id: "",
       name: "",
       email: "",
       password: "",
-      error: "",
-      open: false
+      redirectToProfile: false
     };
+  }
+
+  init = (userId) => {
+    const token = isAuthenticated().token;
+    read(userId, token).then((data) => {
+      if (data.error) {
+        this.setState({ redirectToProfile: true });
+      } else {
+        this.setState({
+          id: data._id,
+          name: data.name,
+          email: data.email,
+          error: ""
+        });
+      }
+    });
+  };
+
+  componentDidMount() {
+    const userId = this.props.match.params.userId;
+    this.init(userId);
   }
 
   handleChange = (name) => (event) => {
@@ -25,23 +47,22 @@ class Signup extends Component {
     const user = {
       name: name,
       email: email,
-      password: password
+      password: password || undefined
     };
     // console.log(user);
-    signup(user).then((data) => {
+    const userId = this.props.match.params.userId;
+    const token = isAuthenticated().token;
+
+    update(userId, token, user).then((data) => {
       if (data.error) this.setState({ error: data.error });
       else
         this.setState({
-          error: "",
-          name: "",
-          email: "",
-          password: "",
-          open: true
+          redirectToProfile: true
         });
     });
   };
 
-  signupForm = (name, email, password) => (
+  updateForm = (name, email, password) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Name</label>
@@ -72,7 +93,7 @@ class Signup extends Component {
             onClick={this.clickSumbit}
             className="btn btn-raised btn-primary"
           >
-            Submit
+            Update
           </button>
         </div>
       </div>
@@ -80,29 +101,18 @@ class Signup extends Component {
   );
 
   render() {
-    const { name, email, password, error, open } = this.state;
+    const { id, name, email, password, redirectToProfile } = this.state;
+    if (redirectToProfile) {
+      return <Redirect to={`/user/${id}`} />;
+    }
     return (
       <div className="container">
-        <h2 className="mt-5 mb-5">Signup</h2>
+        <h2 className="mt-5 mb-5">Edit Profile</h2>
 
-        <div
-          className="alert alert-danger"
-          style={{ display: error ? "" : "none" }}
-        >
-          {error}
-        </div>
-
-        <div
-          className="alert alert-info"
-          style={{ display: open ? "" : "none" }}
-        >
-          New Account sucessfully created. Please <Link to="/signin">Sign In</Link>!
-        </div>
-
-        {this.signupForm(name, email, password)}
+        {this.updateForm(name, email, password)}
       </div>
     );
   }
 }
 
-export default Signup;
+export default EditProfile;
