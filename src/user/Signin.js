@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
-import { signin, authenticate } from "../auth";
+import { signin, authenticate, isAuthenticated } from "../auth";
 
 class Signin extends Component {
   constructor() {
@@ -75,7 +75,7 @@ class Signin extends Component {
     const { email, password, error, redirectToReffer, loading } = this.state;
 
     if (redirectToReffer) {
-      return <Redirect to="/" />;
+      return <Redirect to={`/user/${isAuthenticated().user._id}`} />;
     }
 
     return (
