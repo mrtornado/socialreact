@@ -81,7 +81,7 @@ class EditProfile extends Component {
     this.setState({ [name]: value, fileSize });
   };
 
-  clickSumbit = (event) => {
+  clickSubmit = (event) => {
     event.preventDefault();
     this.setState({ loading: true });
 
@@ -129,34 +129,30 @@ class EditProfile extends Component {
           className="form-control"
           value={email}
         />
-
-        <div className="form-group">
-          <label className="text-muted">About</label>
-          <i className="fas fa-pencil-alt prefix" />
-          <textarea
-            onChange={this.handleChange("about")}
-            type="text"
-            className="md-textarea form-control"
-            value={about}
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="text-muted">Password</label>
-          <input
-            onChange={this.handleChange("password")}
-            type="password"
-            className="form-control"
-            value={password}
-          />
-          <button
-            onClick={this.clickSumbit}
-            className="btn btn-raised btn-primary"
-          >
-            Update
-          </button>
-        </div>
       </div>
+      <div className="form-group">
+        <label className="text-muted">About</label>
+        <i className="fas fa-pencil-alt prefix" />
+        <textarea
+          onChange={this.handleChange("about")}
+          type="text"
+          className="md-textarea form-control"
+          value={about}
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="text-muted">Password</label>
+        <input
+          onChange={this.handleChange("password")}
+          type="password"
+          className="form-control"
+          value={password}
+        />{" "}
+      </div>
+      <button onClick={this.clickSubmit} className="btn btn-raised btn-primary">
+        Update
+      </button>
     </form>
   );
 
