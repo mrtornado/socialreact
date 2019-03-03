@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth";
+import SocialLogin from "./SocialLogin";
 
 class Signin extends Component {
   constructor() {
@@ -81,7 +82,9 @@ class Signin extends Component {
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Sign in</h2>
-
+        <hr />
+        <SocialLogin />
+        <hr />
         <div
           className="alert alert-danger"
           style={{ display: error ? "" : "none" }}
