@@ -41,11 +41,13 @@ class Posts extends Component {
                   className="img-thumbnail mb-3"
                   style={{ height: "200px", width: "100%" }}
                 />
-                <h5 className="card-title">
-                  {truncate(post.title, { length: 25, separator: /,?\.* +/ })}
-                </h5>
+                <Link to={`/post/${post._id}`}>
+                  <h5 className="card-title">
+                    {truncate(post.title, { length: 25, separator: /,?\.* +/ })}
+                  </h5>
+                </Link>
                 <p className="card-text">
-                  {truncate(post.body, { length: 90, separator: /,?\.* +/ })}
+                  {truncate(post.body, { length: 80, separator: /,?\.* +/ })}
                 </p>
                 <br />
                 <p className="font-italic mark">

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DefaultProfile from "../images/avatar.jpg";
+import { truncate } from "lodash";
 // import { updateUser } from "./apiUser";
 
 var api = process.env.REACT_APP_API_URL;
@@ -69,7 +70,12 @@ class ProfileTabs extends Component {
                 <div>
                   <Link to={`/post/${post._id}`}>
                     <div className="d-inline-block">
-                      <p className="lead">{post.title}</p>
+                      <p className="lead">
+                        {truncate(post.title, {
+                          length: 25,
+                          separator: /,?\.* +/
+                        })}
+                      </p>
                     </div>
                   </Link>
                 </div>

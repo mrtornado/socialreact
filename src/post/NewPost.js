@@ -27,8 +27,8 @@ class NewPost extends Component {
     const { title, body, fileSize } = this.state;
     this.setState({ loading: false });
 
-    if (fileSize > 1500000) {
-      this.setState({ error: "Image file should not be larger then 1.5mb" });
+    if (fileSize > 2000000) {
+      this.setState({ error: "Image file should not be larger then 2 mb" });
       return false;
     }
 
