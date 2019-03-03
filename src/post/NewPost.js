@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../auth";
-import { create } from "./apiPost";
+import { create, update } from "./apiPost";
 import { Redirect } from "react-router-dom";
 
 class NewPost extends Component {
@@ -137,7 +137,7 @@ class NewPost extends Component {
     } = this.state;
 
     if (redirectToProfile) {
-      return <Redirect to={`/user/${user._id}`} />;
+      return <Redirect to={`/post/${update.postId}`} />;
     }
 
     return (

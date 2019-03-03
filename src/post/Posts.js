@@ -32,15 +32,17 @@ class Posts extends Component {
           return (
             <div className="card col-md-4 mb-3" key={i}>
               <div className="card-body">
-                <img
-                  src={`${process.env.REACT_APP_API_URL}/post/photo/${
-                    post._id
-                  }`}
-                  alt={post.title}
-                  onError={(i) => (i.target.src = `${DefaultPosts}`)}
-                  className="img-thumbnail mb-3"
-                  style={{ height: "200px", width: "100%" }}
-                />
+                <Link to={`/post/${post._id}`}>
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}/post/photo/${
+                      post._id
+                    }`}
+                    alt={post.title}
+                    onError={(i) => (i.target.src = `${DefaultPosts}`)}
+                    className="img-thumbnail mb-3"
+                    style={{ height: "200px", width: "100%" }}
+                  />
+                </Link>
                 <Link to={`/post/${post._id}`}>
                   <h5 className="card-title">
                     {truncate(post.title, { length: 25, separator: /,?\.* +/ })}
