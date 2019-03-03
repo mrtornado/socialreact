@@ -35,7 +35,9 @@ class Users extends Component {
 
           <div className="card-body">
             <h5 className="card-title">{user.name}</h5>
-            <p className="card-text">{user.email}</p>
+            <p className="card-text">{`Joined: ${new Date(
+              user.created
+            ).toDateString()}`}</p>
             <Link
               to={`/user/${user._id}`}
               className="btn btn-raised btn-sm btn-primary"
