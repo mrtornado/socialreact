@@ -81,7 +81,6 @@ class Profile extends Component {
 
   render() {
     const { redirectToSignin, user, posts } = this.state;
-
     if (redirectToSignin) return <Redirect to="/signin" />;
     const photoUrl = user._id
       ? `${process.env.REACT_APP_API_URL}/user/photo/${
@@ -102,7 +101,7 @@ class Profile extends Component {
               alt={user.name}
             />
           </div>
-          <div className="col-md-8">
+          <div className="col-md-4">
             <div className="lead mt-2">
               <p>Hello {user.name}</p>
               <p>Email: {user.email}</p>
@@ -119,8 +118,8 @@ class Profile extends Component {
                   Create Post
                 </Link>
                 <Link
-                  to={`/user/edit/${user._id}`}
                   className="btn btn-raised btn-success mr-5"
+                  to={`/user/edit/${user._id}`}
                 >
                   Edit Profile
                 </Link>
@@ -133,7 +132,25 @@ class Profile extends Component {
               />
             )}
           </div>
+          <div>
+            {isAuthenticated().user && isAuthenticated().user.role === "admin" && (
+              <div class="card mt-5">
+                <div className="card-body">
+                  <h5 className="card-title">Admin</h5>
+                  <p className="mb-2 text-danger">Edit/Delete as an Admin</p>
+                  <Link
+                    className="btn btn-raised btn-success mr-5"
+                    to={`/user/edit/${user._id}`}
+                  >
+                    Edit Profile
+                  </Link>
+                  <DeleteUser userId={user._id} />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
+
         <div className="row">
           <div className="col md-12 mt-5 mb-5">
             <hr />

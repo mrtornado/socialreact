@@ -90,13 +90,21 @@ class EditProfile extends Component {
       const token = isAuthenticated().token;
 
       update(userId, token, this.userData).then((data) => {
-        if (data.error) this.setState({ error: data.error });
-        else
+        if (data.error) {
+          this.setState({ error: data.error });
+          // if admin only redirect
+        } else if (isAuthenticated().user.role === "admin") {
+          this.setState({
+            redirectToProfile: true
+          });
+        } else {
+          // if same user update localstorage and redirect
           updateUser(data, () => {
             this.setState({
               redirectToProfile: true
             });
           });
+        }
       });
     }
   };
@@ -204,7 +212,9 @@ class EditProfile extends Component {
           alt={name}
         />
 
-        {this.updateForm(name, email, password, about)}
+        {isAuthenticated().user.role === "admin" ||
+          (isAuthenticated().user._id === id &&
+            this.updateForm(name, email, password, about))}
       </div>
     );
   }

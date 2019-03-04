@@ -15,8 +15,8 @@ export const create = (userId, token, post) => {
     .catch((err) => console.log(err));
 };
 
-export const list = () => {
-  return fetch(`${api}/posts`, {
+export const list = (page) => {
+  return fetch(`${api}/posts/?page=${page}`, {
     method: "GET"
   })
     .then((response) => {
